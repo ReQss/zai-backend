@@ -53,6 +53,6 @@ public class OrderItem {
                 "orderId=" + orderId +
                 ", product=" + product +
                 ", quantity=" + quantity +
-                '}';
+                '}' + "\n";
     }
 }

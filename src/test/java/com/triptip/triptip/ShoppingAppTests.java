@@ -3,6 +3,7 @@ package com.triptip.triptip;
 import com.triptip.triptip.model.*;
 import com.triptip.triptip.repository.*;
 import com.triptip.triptip.service.AddressService;
+import com.triptip.triptip.service.OrderItemService;
 import com.triptip.triptip.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ class ShoppingAppTests {
 	private AddressService addressService;
 	@Autowired
 	private OrderService orderService;
+    @Autowired
+    private OrderItemService orderItemService;
 
 	@Test
 	void contextLoads() {
@@ -160,8 +163,14 @@ class ShoppingAppTests {
 					System.out.println(product);
 		}
 	}
-	@Test
-	public void findById(){
-		orderService.addOrder("admin");
-	}
+
+    @Test
+    public void addOrderItems(){
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(new OrderItem(302, productRepository.findById(3), 2)); // Order ID: 1, Product 1, Quantity: 2
+        orderItems.add(new OrderItem(302,  productRepository.findById(2), 1)); // Order ID: 1, Product 2, Quantity: 1
+//        System.out.println(orderItems);
+        orderItemService.addOrderItems(orderItems);
+
+    }
 }

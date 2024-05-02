@@ -13,11 +13,14 @@ import java.time.LocalDate;
 public class OrderService {
     @Autowired
     OrderRepository orderRepository;
-    @Autowired
-    UserRepository userRepository;
-    public void addOrder(String login){
-        User user = userRepository.findByLogin(login);
-        Order order = new Order(user, LocalDate.now(),100,user.getAddress());
+
+//    public void addOrder(User finded_user){
+//        User user = finded_user;
+//        Order order = new Order(user, LocalDate.now(),100,user.getAddress());
+//        orderRepository.save(order);
+//    }
+    public void addOrder(Order order){
         orderRepository.save(order);
     }
 }
+
