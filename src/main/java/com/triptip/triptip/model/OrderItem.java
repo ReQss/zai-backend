@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "order_items")
 public class OrderItem {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private int id;
     private int orderId;
  //   @Column(name = "item_id")
     @ManyToOne

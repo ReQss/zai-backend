@@ -164,13 +164,24 @@ class ShoppingAppTests {
 		}
 	}
 
-    @Test
-    public void addOrderItems(){
-        List<OrderItem> orderItems = new ArrayList<>();
-        orderItems.add(new OrderItem(302, productRepository.findById(3), 2)); // Order ID: 1, Product 1, Quantity: 2
-        orderItems.add(new OrderItem(302,  productRepository.findById(2), 1)); // Order ID: 1, Product 2, Quantity: 1
-//        System.out.println(orderItems);
-        orderItemService.addOrderItems(orderItems);
-
-    }
+//    @Test
+//    public void addOrderItems(){
+//        List<OrderItem> orderItems = new ArrayList<>();
+//        orderItems.add(new OrderItem(302, productRepository.findById(3), 2)); // Order ID: 1, Product 1, Quantity: 2
+//        orderItems.add(new OrderItem(302,  productRepository.findById(2), 1)); // Order ID: 1, Product 2, Quantity: 1
+////        System.out.println(orderItems);
+//        orderItemService.addOrderItems(orderItems);
+//
+//    }
+	@Test
+	public void printOrders(){
+		int userId = 652; // admin
+		User findedUser = userRepository.findById(userId);
+		List<Order> orders = orderRepository.findAllByUser(findedUser);
+		for(Order order : orders){
+			System.out.println(order + "\n Order items: \n");
+			List<OrderItem> orderItems = orderItemRepository.findAllByOrderId(order.getOrderId());
+			System.out.println(orderItems + "\n");
+		}
+	}
 }
