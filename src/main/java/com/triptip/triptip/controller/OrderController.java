@@ -81,5 +81,38 @@ public class OrderController {
         }
         return orderDTOs;
     }
+    @GetMapping("/admin/orders")
+    public List<OrderDTO> adminGetOrders(){
+        List<Order> orders = orderRepository.findAll();
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        for(Order order : orders){
+            List <OrderItem> orderItems = orderItemRepository.findAllByOrderId(order.getOrderId());
+            OrderDTO orderDTO = new OrderDTO(order,orderItems);
+            orderDTOS.add(orderDTO);
+        }
+        return orderDTOS;
+    }
+    @DeleteMapping("/admin/delete/{orderId}/{productId}")
+    public void deleteOrderItem(@PathVariable("orderId") String orderId, @PathVariable("productId") String productId ){
+        List<OrderItem> orderItems = orderItemRepository.findAllByOrderId(Integer.parseInt(orderId));
+        boolean found = false;
+        for(OrderItem orderItem : orderItems) {
+            if (orderItem.getProduct().getId() == Integer.parseInt(productId)) {
+                orderItemRepository.delete(orderItem);
+                found = true;
+                break;
+            }
+        }
+        if( found) {
+            Order order = orderRepository.findByOrderId(Integer.parseInt(orderId));
+            float price=0;
+            List<OrderItem> updatedOrderItems = orderItemRepository.findAllByOrderId(Integer.parseInt(orderId));
 
+            for(OrderItem orderItem : updatedOrderItems) {
+                price += orderItem.getQuantity() * orderItem.getProduct().getPrice();
+            }
+            order.setOrderPrice(price);
+            orderRepository.save(order);
+        }
+    }
 }
