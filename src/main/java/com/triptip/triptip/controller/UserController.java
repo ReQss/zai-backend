@@ -34,6 +34,14 @@ public class UserController {
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+    @DeleteMapping("/admin/deleteUser/{id}")
+    public void deleteUser(@PathVariable  int id){
+        User user = userRepository.findById(id);
+        if(user==null)
+            System.out.println("User not found");
+        else
+            userRepository.delete(user);
+    }
     @PostMapping("/addUser")
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
