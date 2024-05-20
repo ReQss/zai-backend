@@ -17,6 +17,7 @@ public class Product {
     @Column(name = "price")
     private float price;
     @JoinColumn (name = "platformid")
+    @Column(name = "platformid")
     private int platformId;
 
 //    @JoinColumn(name = "categoryId")
@@ -32,6 +33,15 @@ public class Product {
 
     public Product(int id, String productName, String imageSrc, int stock, float price, int platformId, Category category) {
         this.id = id;
+        this.productName = productName;
+        this.imageSrc = imageSrc;
+        this.stock = stock;
+        this.price = price;
+        this.platformId = platformId;
+        this.category = category;
+    }
+
+    public Product(String productName, String imageSrc, int stock, float price, int platformId, Category category) {
         this.productName = productName;
         this.imageSrc = imageSrc;
         this.stock = stock;
